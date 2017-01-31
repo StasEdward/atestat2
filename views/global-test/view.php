@@ -227,7 +227,8 @@ $this->params['breadcrumbs'][] = $model->SERIALNUMBER;
                                     'tag' => 'a',
                                     'data-toggle' => 'modal',
                                     'data-target' => '#showModalButton'.$model->GRAPH_ID,
-                                    'href' => Url::toRoute(['/traces-list/view?id='.$model->GRAPH_ID.'&mask_name='.$model->Y_AXIS]),
+                                    'href' => Url::toRoute(['/traces-list/view?id='.$model->GRAPH_ID]),
+                                    //'href' => Url::toRoute(['/traces-list/view?id='.$model->GRAPH_ID.'&mask_name='.$model->Y_AXIS]),
                                 ],
                             ]);
                             }

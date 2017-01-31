@@ -53,14 +53,17 @@ class TracesListController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id, $mask_name)
+    public function actionView($id)
     {
-        str_replace(' ', '%20', $mask_name);
+    //    str_replace(' ', '%20', $mask_name);
 
-//      $mask_name = "Delta Pout(dBm)";
+      //$mask_name = "Delta Pout(dBm)";
       $trace_model = $this->findModel($id);
       $tr_arr = $trace_model->toArray();
 
+//      print_r($tr_arr);
+      $mask_name = $tr_arr['Y_AXIS'];
+//      echo $mask_name;
 
       $arr_freq = array();
       $strings_array = explode('|', $tr_arr['TRACE_FREQ_DATA']);
