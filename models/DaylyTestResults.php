@@ -70,10 +70,23 @@ class DaylyTestResults extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getUUT_ODU_Yeld()
+    {
+        $res1 = Yii::$app->db->createCommand('SELECT * FROM  UUT_ODU_YELD_MONTH ORDER BY YEILD')->queryAll();
+        return $res1;
+    }
+
+    public function getUUT_IDU_Yeld()
+    {
+        $res1 = Yii::$app->db->createCommand('SELECT * FROM  UUT_IDU_YELD_MONTH ORDER BY YEILD')->queryAll();
+        return $res1;
+    }
+
+
     public function getLastDayPassResults()
     {
         if ((Yii::$app->user->identity->username <> 'admin') AND (Yii::$app->user->identity->username <> 'Ceragon'))
-        $res1 = Yii::$app->db->createCommand('SELECT PASS_RESULT as passresult from PASSFAIL_RESULTS where SERVER_NAME=\''.Yii::$app->user->identity->username.'\'')->queryAll();
+            $res1 = Yii::$app->db->createCommand('SELECT PASS_RESULT as passresult from PASSFAIL_RESULTS where SERVER_NAME=\''.Yii::$app->user->identity->username.'\'')->queryAll();
         else{
             $res1 = Yii::$app->db->createCommand('SELECT PASS_RESULT as passresult from PASSFAIL_RESULTS where SERVER_NAME=\'Ceragon\'')->queryAll();
             $res2 = Yii::$app->db->createCommand('SELECT PASS_RESULT as passresult from PASSFAIL_RESULTS where SERVER_NAME=\'Flex\'')->queryAll();

@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use kartik\depdrop\DepDrop;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
+use app\models\DaylyTestResults;
 
 
 /**
@@ -73,6 +74,11 @@ class AtereportController extends Controller
     */
     public function actionIndex()
     {
+    //    $pass_arr = DaylyTestResults::getUUTYeld();
+
+
+
+
         $model = new Atereport();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -253,7 +259,7 @@ echo "tyt";
             'model' => $this->findModel($id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            
+
         ]);
     }
 

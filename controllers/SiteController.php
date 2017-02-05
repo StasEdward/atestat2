@@ -75,10 +75,39 @@ class SiteController extends Controller
             ]);
         }
 
+        $yeild_arr = array();
         $fail_arr = array();
         $pass_arr = array();
         $error_arr = array();
         $average_arr = array();
+
+        $yeild_ODU_UUT_arr = array();
+        $yeild_ODU_TOTALL_arr = array();
+        $yeild_ODU_PASS_arr = array();
+        $yeild_ODU_FAIL_arr = array();
+        $yeild_ODU_PERCENT_arr = array();
+        $yeild_ODU_arr = DaylyTestResults::getUUT_ODU_Yeld();
+        for ($i=0; $i < count($yeild_ODU_arr); $i++) {
+            $yeild_ODU_UUT_arr[$i] =  $yeild_ODU_arr[$i]['UUT_NAME'];
+            $yeild_ODU_PASS_arr[$i] =  (int)$yeild_ODU_arr[$i]['TOTAL_PASS'];
+            $yeild_ODU_FAIL_arr[$i] =  (int)$yeild_ODU_arr[$i]['TOTAL_FAIL'];
+        }
+
+        $yeild_IDU_UUT_arr = array();
+        $yeild_IDU_TOTALL_arr = array();
+        $yeild_IDU_PASS_arr = array();
+        $yeild_IDU_FAIL_arr = array();
+        $yeild_IDU_PERCENT_arr = array();
+        $yeild_IDU_arr = DaylyTestResults::getUUT_IDU_Yeld();
+        for ($i=0; $i < count($yeild_IDU_arr); $i++) {
+            $yeild_IDU_UUT_arr[$i] =  $yeild_IDU_arr[$i]['UUT_NAME'];
+            $yeild_IDU_PASS_arr[$i] =  (int)$yeild_IDU_arr[$i]['TOTAL_PASS'];
+            $yeild_IDU_FAIL_arr[$i] =  (int)$yeild_IDU_arr[$i]['TOTAL_FAIL'];
+        }
+
+        //$yeild__UUT_arr = $yeild_arr[0]['UUT_NAME'];
+    //    print_r($yeild_arr);
+
         $pass_arr = DaylyTestResults::getLastDayPassResults();
         $fail_arr = DaylyTestResults::getLastDayFailResults();
         $error_arr = DaylyTestResults::getLastDayErrorResults();
@@ -192,6 +221,7 @@ class SiteController extends Controller
             $TotalDaylyPF_Failsresult[$i]['data'] = array_merge(array_map('intval', array_slice($tmp_arr, 0)));
         }
 
+        //print_r($UUTFailprovider);
 
         return $this->render('index', [
             //      'searchModel' => $searchModel,
@@ -213,6 +243,15 @@ class SiteController extends Controller
             'TotalDaylyPF_Passresult' => $TotalDaylyPF_Passresult,
             'TotalDaylyPF_Failsresult' => $TotalDaylyPF_Failsresult,
             'UUTFailprovider' => $UUTFailprovider,
+            'yeild_ODU_UUT_arr' => $yeild_ODU_UUT_arr,
+            'yeild_ODU_PASS_arr' => $yeild_ODU_PASS_arr,
+            'yeild_ODU_FAIL_arr' => $yeild_ODU_FAIL_arr,
+
+            'yeild_IDU_UUT_arr' => $yeild_IDU_UUT_arr,
+            'yeild_IDU_PASS_arr' => $yeild_IDU_PASS_arr,
+            'yeild_IDU_FAIL_arr' => $yeild_IDU_FAIL_arr
+
+
             //'facility_name' => $facility_name,
 
 
