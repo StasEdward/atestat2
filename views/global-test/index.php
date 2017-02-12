@@ -137,6 +137,37 @@ $this->params['breadcrumbs'][] = $this->title;
             //  'xlFormat'=>"hh:mm",
             'contentOptions' => ['style'=>'text-align:center'],
         ],
+    /*    [
+            'attribute'=>'TIMESTOP',
+            'vAlign'=>'middle',
+            'label' => 'Test Start',
+            'width'=>'120px',
+            'value'=>function ($model, $key, $index, $widget) {
+                return $model->TIMESTOP;
+            },
+
+            'format'=>['date', 'HH:mm:ss'],
+            //  'xlFormat'=>"hh:mm",
+            'contentOptions' => ['style'=>'text-align:center'],
+        ],
+*/
+        [
+            'attribute'=>'TIMESTOP',
+            'vAlign'=>'middle',
+            'label' => 'Test Time',
+            'width'=>'120px',
+            'value'=>function ($model, $key, $index, $widget) {
+                $end_date = new DateTime($model->TIMESTART,new DateTimeZone('GMT'));
+                $start_date = new DateTime($model->TIMESTOP,new DateTimeZone('GMT'));
+                $interval = $end_date->diff($start_date);
+                $hours   = $interval->format('%h');
+                $minutes = $interval->format('%i');
+                $seconds = $interval->format('%s');
+                $interval = $hours * 60 + $minutes;
+                return (int)($interval).'.'. $seconds  .' min' ;
+            },
+            'contentOptions' => ['style'=>'text-align:center'],
+        ],
 
         // 'timestart',
         // 'timestop',

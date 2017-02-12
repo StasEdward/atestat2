@@ -15,6 +15,12 @@ use kartik\grid\GridView;
 /* @var $this yii\web\View */
 
 $this->title = 'ATE Dashboard';
+
+
+
+
+
+
 ?>
 
 
@@ -720,6 +726,105 @@ $this->title = 'ATE Dashboard';
                 </div>
             </div>
             <!-- Production history-->
+        </section>
+        <section class="col-lg-4 connectedSortable ui-sortable">
+            <!-- last 24 hours UUT fail table -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                    <h3 class="box-title">DB updater client status</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+
+            <div class="box-body border-radius-none">
+                             <?php Pjax::begin();
+
+
+                         //    echo $date;
+                             ?>    <?=
+                             GridView::widget([
+                                     'dataProvider' => $Updater_status_provider,
+                                     'bootstrap' => 'true',
+                                     'bordered'=>true,
+                                     'striped'=>true,
+                                     'condensed'=>true,
+                                     'responsive'=>true,
+                                     'hover'=>true,
+                                     //'layout'=>"{sorter}\n{pager}\n{summary}\n{items}",
+                                     //'containerOptions'=>['style'=>'overflow: auto'], // only set when $responsive = false
+                                     //'headerRowOptions'=>['class'=>'kartik-sheet-style'],
+                                     //'filterRowOptions'=>['class'=>'kartik-sheet-style'],
+                                     'pjax'=>true, // pjax is set to always true for this demo
+                                     'showPageSummary'=> false,
+                                     'columns' => [
+                                         ['class' => 'yii\grid\SerialColumn'],
+
+                                     //    'name',
+                                         [
+                                             'label' => 'FACILITY',
+                                             'attribute'=>'FACILITY',
+                                         ],
+                                         [
+                                             'label' => 'HOST',
+                                             'attribute'=>'HOST',
+                                         ],
+                                         [
+                                             'attribute'=>'Last update',
+                                             'value'=>function ($model, $key, $index, $widget) {
+                                                 $start_date = new DateTime($model->LAST_UPDATE,new DateTimeZone('GMT'));
+                                                 // 2017-02-06 14:11:52
+                                                 $tmp_date = date("Y-m-d H:i:s", strtotime('+2 hours'));
+                                                // $tmp_date = time();
+                                                // echo $tmp_date;
+                                                 $end_date = new DateTime($tmp_date,new DateTimeZone('GMT'));
+                                                 $interval = $end_date->diff($start_date);
+                                                 $hours   = $interval->format('%h');
+                                                 $minutes = $interval->format('%i');
+                                                 $interval = $hours * 60 + $minutes;
+                                                 if((int)($interval) > 11)
+                                                    return '<span class="label label-danger"> ' .(int)($interval). ' mins ago</span>';
+                                                else if (((int)($interval) > 7) AND ((int)($interval) <= 10))
+                                                    return '<span class="label label-warning"> ' .(int)($interval). ' mins ago</span>';
+                                                 else
+                                                    return '<span class="label label-success"> ' .(int)($interval). ' mins ago</span>';
+                                             },
+                                             'filterInputOptions'=>['placeholder'=>'Any result'],
+                                             'vAlign'=>'middle',
+                                             'format'=>'raw',
+/*
+
+                                             'class' => 'yii\grid\ActionColumn',
+                                             'contentOptions' => ['style'=>'text-align:center'],
+                                             'header'=>'Action',
+                                             'headerOptions' => ['width' => '30'],
+                                             'template' => '{view} {link}',
+                                             'contentOptions' => ['style'=>'text-align:center'],
+                                             'buttons' => [
+                                                 'view' => function ($url,$model) {
+                                                 //    print_r($model);
+                                                 $date = date("Y-m-d", time());
+                                                 return Html::a('<span class="glyphicon glyphicon-info-sign"></span>', $model['LAST_UPDATE']);
+
+                                                },
+
+                                             ],
+*/
+                                         ],
+                                     ],
+                                 ]); ?>
+                                 <?php  Pjax::end(); ?>
+                             <?php // http://atestat/global-test/index?GlobalTestSearch[FACILITY]=VCL1&GlobalTestSearch[UUTNAME]=&GlobalTestSearch[GLOBALRESULT]=Fail ?>
+                             <!-- /.box-body -->
+                         </div>
+                     </div>
+
+                     <!-- /.box -->
+
+            <!-- /.last 24 hours UUT fail table-->
         </section>
         <!-- /.third row -->
     </div>

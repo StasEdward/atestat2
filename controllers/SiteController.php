@@ -13,6 +13,7 @@ use app\models\EntryForm;
 use app\models\DaylyTestResults;
 use app\models\PASSFAILDAYLY;
 use app\models\DbStat;
+use app\models\DbUpdaterStatus;
 use yii\web\JsExpression;
 use \yii\helpers\ArrayHelper;
 use yii\data\ArrayDataProvider;
@@ -183,6 +184,13 @@ class SiteController extends Controller
             //$facility_name = '';
         }
 
+        //$Updater_status = array();
+        //$Updater_status = DbUpdaterStatus::getUpdaterStatus();
+        $Updater_status_provider = new ActiveDataProvider([
+            'query' => DbUpdaterStatus::find()->orderBy('LAST_UPDATE'),
+            'pagination' => false
+        ]);
+
 
 
         $DaylyPF_result = array();
@@ -249,7 +257,8 @@ class SiteController extends Controller
 
             'yeild_IDU_UUT_arr' => $yeild_IDU_UUT_arr,
             'yeild_IDU_PASS_arr' => $yeild_IDU_PASS_arr,
-            'yeild_IDU_FAIL_arr' => $yeild_IDU_FAIL_arr
+            'yeild_IDU_FAIL_arr' => $yeild_IDU_FAIL_arr,
+            'Updater_status_provider' => $Updater_status_provider
 
 
             //'facility_name' => $facility_name,

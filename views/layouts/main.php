@@ -69,7 +69,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Ceragon Networks Ltd. <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Ceragon1 Networks Ltd. <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

@@ -46,7 +46,7 @@ class GlobalTestController extends Controller
 
         $searchModel = new GlobalTestSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize=40;
+        $dataProvider->pagination->pageSize=20;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

@@ -17,6 +17,17 @@ $this->params['breadcrumbs'][] = $model->SERIALNUMBER;
 
 ?>
 <div class="global-test-view">
+    <?PHP
+    $start_date = new DateTime($model->TIMESTOP,new DateTimeZone('GMT'));
+    $end_date = new DateTime($model->TIMESTART,new DateTimeZone('GMT'));
+    $interval = $end_date->diff($start_date);
+    $hours   = $interval->format('%h');
+    $minutes = $interval->format('%i');
+    $seconds = $interval->format('%s');
+    $interval = $hours * 60 + $minutes;
+
+    //echo (int)($interval).'.'. $seconds  .' min' ;
+    ?>
     <?=  DetailView::widget([
         'model' => $model,
         'mode' => 'view',
@@ -127,11 +138,24 @@ $this->params['breadcrumbs'][] = $model->SERIALNUMBER;
                 ]
             ],
             [
-                'attribute'=>'VERSIONS',
-                'label'=>'Versions',
-                'format'=>'raw',
-                'value'=>'<span class="text-justify"><em>' . $model->VERSIONS . '</em></span>',
-                'options'=>['rows'=>4]
+                'columns' => [
+                    [
+                        'attribute'=>'VERSIONS',
+                        'label'=>'Versions',
+                        'format'=>'raw',
+                        'value'=>'<span class="text-justify"><em>' . $model->VERSIONS . '</em></span>',
+                        'options'=>['rows'=>4]
+                    ],
+                    [
+                        'attribute'=>'TIMESTOP',
+                        'label'=>'Test Time',
+                        'format'=>'raw',
+                        'type'=>DetailView::INPUT_SWITCH,
+                        'value'=> (int)($interval).'.'. $seconds  .' min',
+                        'valueColOptions'=>['style'=>'width:30%']
+                    ],
+
+                ],
             ],
         ],
 
